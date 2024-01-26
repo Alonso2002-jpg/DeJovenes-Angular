@@ -1,0 +1,155 @@
+<app-header></app-header>
+<form [formGroup]="formRegister" (reset)="resetForm()" (submit)="submit()">
+  <div class="row">
+  <div class="mb-3 col-6">
+    <div
+      class="alert alert-danger text-center"
+      role="alert"
+      *ngIf="formRegister.get('name')?.hasError('require') || formRegister.get('name')?.hasError('minlength') || formRegister.get('name')?.hasError('maxlength')"
+    >
+      <p *ngIf="formRegister.get('name')?.errors?.['require']">Debe ingresar un nombre obligatoriamente</p>
+      <p *ngIf="formRegister.get('name')?.errors?.['minlength']">Debe ingresar un nombre con mas de 2 caracteres</p>
+      <p *ngIf="formRegister.get('name')?.errors?.['maxlength']">Debe ingresar un nombre con menos de 60 caracteres</p>
+    </div>
+    <label for="name" class="form-label">Nombres</label>
+    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" formControlName = "name">
+  </div>
+    <div class="mb-3 col-6">
+      <div
+        *ngIf="formRegister.get('apellido')?.hasError('require') || formRegister.get('apellido')?.hasError('minlength') || formRegister.get('apellido')?.hasError('maxlength')"
+        class="alert alert-danger"
+        role="alert"
+      >
+        <p *ngIf="formRegister.get('apellido')?.errors?.['require']">Debe ingresar un apellido obligatoriamente</p>
+        <p *ngIf="formRegister.get('apellido')?.errors?.['minlength']">Debe ingresar un apellido con mas de 2 caracteres</p>
+        <p *ngIf="formRegister.get('apellido')?.errors?.['maxlength']">Debe ingresar un apellido con menos de 60 caracteres</p>
+      </div>
+      <label for="lastname" class="form-label">Apellidos</label>
+      <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" formControlName = "lastname">
+    </div>
+  <div class="mb-3 col-4">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="formRegister.get('dninie')?.hasError('require') || formRegister.get('dninie')?.hasError('DNINIE')"
+    >
+      <p *ngIf="formRegister.get('dninie')?.errors?.['require']">Debe ingresar un DNI o NIE</p>
+      <p *ngIf="formRegister.get('dninie')?.errors?.['DNINIE']">Debe ingresar un DNI o NIE valido</p>
+
+    </div>
+    <label for="dninie" class="form-label">DNI/NIE</label>
+    <input type="text" class="form-control" id="dninie" formControlName = "dninie">
+  </div>
+  <div class="col-8"></div>
+   <div class="mb-3 col-4">
+     <div
+       class="alert alert-danger"
+       role="alert"
+       *ngIf="formRegister.get('fechaNac')?.hasError('require') || formRegister.get('fechaNac')?.hasError('DNINIE')"
+     >
+       Debe ingresar su fecha de nacimiento DD/MM/AAAA
+     </div>
+      <label for="fechaNam" class="form-label">Fecha de Nacimiento</label>
+      <input type="text" class="form-control" id="fechaNam" formControlName = "fechaNac">
+   </div>
+  <div class="col-4"></div>
+  <div class="mb-3 col-8">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="formRegister.get('fileDNIE')?.hasError('require') || formRegister.get('fileDNIE')?.hasError('fileDNIE')"
+    >
+      Debe adjuntar un fichero de imagen valido
+    </div>
+      <label for="formFile" class="form-label">Adjunte su DNI/NIE</label>
+      <input class="form-control" type="file" id="formFile" formControlName="fileDNIE">
+  </div>
+  <div class="col-4"></div>
+  <div class="col-12">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="formRegister.get('gender')?.hasError('require')"
+    >
+      Debe seleccionar una opcion
+    </div>
+    <label class="form-label">Seleccione su genero</label> <br>
+    <input type="radio" class="btn-check" name="gender" id="option1" autocomplete="off" formControlName = "gender">
+    <label class="btn btn-primary" for="option1">Masculino</label>
+
+    <input type="radio" class="btn-check" name="gender" id="option2" autocomplete="off" formControlName = "gender">
+    <label class="btn btn-danger mx-5" for="option2">Femenino</label>
+
+    <input type="radio" class="btn-check" name="gender" id="option3" autocomplete="off" formControlName = "gender">
+    <label class="btn btn-secondary mx-2" for="option3">No Binario</label>
+  </div>
+  <div class="col-6 my-3">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="formRegister.get('intereses')?.hasError('require')"
+    >
+      Debe seleccionar al menos un interes
+    </div>
+    <label class="form-label">Indicanos tus intereses</label> <br>
+    <select class="form-select" multiple size="3" aria-label="Multiple select example" formControlName = "intereses">
+      <option selected>Elija una de las siguientes</option>
+      <option value="arte">Arte</option>
+      <option value="literatura">Literatura</option>
+      <option value="musica">Musica</option>
+      <option value="cocina">Cocina</option>
+    </select>
+  </div>
+  <div class="col-6"></div>
+  <div class="mb-3 col-4">
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="formRegister.get('codPostal')?.hasError('require') || formRegister.get('codPostal')?.hasError('minlength') || formRegister.get('codPostal')?.hasError('maxlength')"
+    >
+      Debe ingresar su codigo postal de 5 digitos
+    </div>
+      <label for="cp" class="form-label">Codigo Postal</label>
+      <input type="text" class="form-control" id="cp" aria-describedby="cp" formControlName="codPostal" (blur)="actualizarProvincia()">
+  </div>
+  <div class="col-4"></div>
+  <div class="col-4">
+    <label for="provincia" class="form-label">Provincia</label>
+    <input type="text" class="form-control" [disabled]="true" id="provincia" aria-describedby="provincia" value="{{provincia}}">
+  </div>
+    <div class="col-6 my-3">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="formRegister.get('actualSit')?.hasError('require')"
+      >
+        Debe elegir una opcion
+      </div>
+      <label class="form-label">Situacion Actual</label> <br>
+      <select class="form-select" aria-label="situacion actual" formControlName="actualSit">
+        <option selected>Elija una de las siguientes</option>
+        <option value="estudiante">Estudiante</option>
+        <option value="trabajador">Trabajador</option>
+        <option value="en-paro">En Paro</option>
+      </select>
+    </div>
+  <div class="col-6"></div>
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="formRegister.get('terminos')?.hasError('requiredTrue')"
+    >
+      Debe aceptar los terminos y condiciones
+    </div>
+    <div class="form-check col-6 my-3">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" formControlName="terminos">
+      <label class="form-check-label" for="flexCheckDefault">
+        Aceptar Terminos y Condiciones
+      </label>
+    </div>
+    <div class="col-6"></div>
+
+  <button type="submit" class="btn btn-primary col-6">Submit</button>
+    <button type="reset" class="btn btn-warning col-6">Reset</button>
+  </div>
+</form>
